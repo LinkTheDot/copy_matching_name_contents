@@ -5,12 +5,18 @@ mod clap;
 mod logger;
 
 fn main() {
-  if let Err(error) = crate::logger::setup_file_logger() {
-    println!("Failed to start logger. Reason: `{:?}`", error);
-    std::thread::sleep(std::time::Duration::from_secs(5));
+  let args = Args::new();
+
+  if args.logs_disabled_flag() && args.log_diff_flag() {
+    panic!("Logs cannot be disabled (-n) when the `log_diff` flag (-l) is set");
   }
 
-  let args = Args::new();
+  if !args.logs_disabled_flag() {
+    if let Err(error) = crate::logger::setup_file_logger() {
+      panic!("Failed to start logger. Reason: `{:?}`", error);
+    }
+  }
+
   let config = Config::new(args.get_compare(), args.get_copy(), args.get_dest());
 
   if !args.log_diff_flag() {

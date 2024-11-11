@@ -13,6 +13,7 @@ impl Args {
   const DESTINATION: &'static str = "destination";
   const LOG_DIFF: &'static str = "log difference";
   const DEFAULT_DESTINATION_PATH: &'static str = "copy_dest";
+  const LOGS_DISABLED: &'static str = "logs_disabled";
 
   pub fn new() -> Self {
     let args = Self::setup_args();
@@ -63,6 +64,10 @@ impl Args {
     self.args.get_flag(Self::LOG_DIFF)
   }
 
+  pub fn logs_disabled_flag(&self) -> bool {
+    self.args.get_flag(Self::LOGS_DISABLED)
+  }
+
   fn setup_args() -> clap::ArgMatches {
     Command::new("Copy Matching Name Contents")
       .arg(
@@ -92,6 +97,13 @@ impl Args {
           .long("logdiff")
           .action(clap::ArgAction::SetTrue)
           .help("With this flag set, the difference between copy and compare will be logged instead of running the program."),
+      )
+        .arg(
+        Arg::new(Self::LOGS_DISABLED)
+          .short('n')
+          .long("no_log")
+          .action(clap::ArgAction::SetTrue)
+          .help("With this flag set, no logs will be created."),
       )
       .get_matches()
   }
