@@ -43,7 +43,7 @@ impl Config {
     let comparing_paths = self.file_paths_under_comparing()?;
     let copying_paths = self.file_paths_under_copying()?;
 
-    let comparing_file_names: Vec<String> = paths_to_file_names(&comparing_paths)
+    let comparing_file_names: HashSet<String> = paths_to_file_names(&comparing_paths)
       .into_iter()
       .flatten()
       .collect();

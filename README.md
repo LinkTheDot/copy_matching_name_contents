@@ -32,3 +32,5 @@ are ignored,
 - If you want to compare two directories to make sure you got everything, the -l
   flag will only run to write the difference between the copy and compare
   directories into the log file.
+- When comparing, make sure you have configured which directories you wish to
+  compare. It will be comparing what `copying` is missing from `comparing`.
